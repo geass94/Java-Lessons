@@ -1,4 +1,4 @@
-package ge.itestep;
+package ge.itestep.Lesson_One;
 
 public class Monitor {
     public Integer frequency;

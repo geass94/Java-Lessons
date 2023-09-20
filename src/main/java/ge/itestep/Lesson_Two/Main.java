@@ -74,6 +74,13 @@ public class Main {
             add(9);
             add(10);
         }};
+
+        numbers.sort((s1, s2) -> {
+            if (s1 > s2) return -1;
+            else return 1;
+        });
+
+        System.out.println(numbers);
 //        System.out.println(numbers);
 //        List<Integer> odds = numbers.stream().filter(n -> n % 2 == 0).collect(Collectors.toList());
         List<Integer> odds = new ArrayList<>();

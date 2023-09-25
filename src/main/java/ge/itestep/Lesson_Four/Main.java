@@ -9,7 +9,10 @@ public class Main {
         task1.setNote("აუცილებლად გამოვიყენოთ ნასწავლი მასალა");
 
         TaskDAO dao = new TaskDAO();
-//        int idx = dao.createTask(task1);
+//        int idx = dao.createTask(task1)
+//
+//
+//        ;
 
         Task task = dao.getById(4);
 

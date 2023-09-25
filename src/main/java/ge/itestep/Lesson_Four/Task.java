@@ -1,6 +1,8 @@
 package ge.itestep.Lesson_Four;
 
-public class Task {
+import java.io.Serializable;
+
+public class Task implements Serializable {
     private int id;
     private String task;
     private String note;
@@ -76,5 +78,18 @@ public class Task {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", task='" + task + '\'' +
+                ", note='" + note + '\'' +
+                ", completed=" + completed +
+                ", dueDate='" + dueDate + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
+                '}';
     }
 }

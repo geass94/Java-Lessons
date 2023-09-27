@@ -68,11 +68,34 @@ public class TaskDAO {
     }
 
     public Task update(Task task, int id) {
-        return new Task();
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            String query = "UPDATE tasks SET task = ?, note = ?, due_date = ? WHERE id = ?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, task.getTask());
+            stmt.setString(2, task.getNote());
+            stmt.setString(3, task.getDueDate());
+            stmt.setInt(4, id);
+
+            stmt.executeUpdate();
+
+            return this.getById(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public boolean delete(int id) {
-        return true;
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            String query = "DELETE FROM tasks where id = ?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, id);
+            return stmt.executeUpdate() == 1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

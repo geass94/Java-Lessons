@@ -9,16 +9,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/")
+@WebServlet("/*")
 public class TodoServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        if (req.getPathInfo() == null) {
+            resp.sendError(400, "Missing path variable");
+        }
+
+        String[] pathVariables = req.getPathInfo().split("/");
+
+        int id = Integer.valueOf(pathVariables[1]);
 
         TaskDAO dao = new TaskDAO();
 
-        Task task = dao.getById(4);
+        Task task = dao.getById(id);
+
+        if (task == null) {
+            resp.sendError(404, "Not found");
+        }
 
         ObjectMapper objectMapper = new ObjectMapper();
 

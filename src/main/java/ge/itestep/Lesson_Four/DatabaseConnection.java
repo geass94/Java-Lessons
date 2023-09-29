@@ -10,7 +10,7 @@ public class DatabaseConnection {
     private static final String PASSWORD = "secret";
 
     public static Connection getConnection() throws SQLException {
-//        DriverManager.registerDriver(new com.mysql.jdbc.Driver ());
+        DriverManager.registerDriver(new com.mysql.jdbc.Driver ());
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 }

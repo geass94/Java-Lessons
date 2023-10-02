@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 
-@WebServlet("/*")
+@WebServlet("/todo/*")
 public class TodoServlet extends HttpServlet {
 
 

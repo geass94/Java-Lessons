@@ -69,7 +69,7 @@ public class TaskDAO {
 
     public Task update(Task task, int id) {
         try (Connection conn = DatabaseConnection.getConnection()) {
-            String query = "UPDATE tasks SET task = ?, note = ?, due_date = ? WHERE id = ?";
+            String query = "UPDATE tasks SET task = ?, note = ?, dueDate = ? WHERE id = ?";
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setString(1, task.getTask());
             stmt.setString(2, task.getNote());

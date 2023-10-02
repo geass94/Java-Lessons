@@ -1,5 +1,9 @@
 package ge.itestep.Lesson_Four;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+
 import java.io.Serializable;
 
 public class Task implements Serializable {
@@ -80,16 +84,24 @@ public class Task implements Serializable {
         this.updatedAt = updatedAt;
     }
 
+//    public Task(JSONObject json) {
+//
+//        this.task = json.getString("task");
+//
+//        this.note = json.getString("note");
+//
+//        this.completed = json.getBoolean("iscompleted");
+//
+//        this.dueDate = json.getString("dueDate");
+//
+//    }
+    public String toJson() throws JsonProcessingException {
+        ObjectMapper OM = new ObjectMapper();
+        String json = OM.writeValueAsString(this);
+        return json;
+    }
     @Override
     public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", task='" + task + '\'' +
-                ", note='" + note + '\'' +
-                ", completed=" + completed +
-                ", dueDate='" + dueDate + '\'' +
-                ", createdAt='" + createdAt + '\'' +
-                ", updatedAt='" + updatedAt + '\'' +
-                '}';
+        return "Task{" + "id=" + id + ", task='" + task + '\'' + ", note='" + note + '\'' + ", completed=" + completed + ", dueDate='" + dueDate + '\'' + ", createdAt='" + createdAt + '\'' + ", updatedAt='" + updatedAt + '\'' + '}';
     }
 }

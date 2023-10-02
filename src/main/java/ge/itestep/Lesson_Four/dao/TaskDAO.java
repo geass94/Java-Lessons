@@ -11,11 +11,13 @@ public class TaskDAO {
 
     public int createTask(Task task) {
         try (Connection conn = DatabaseConnection.getConnection()) {
-            String insertQuery = "INSERT INTO tasks (task, note) VALUES (?, ?)";
+            String insertQuery = "INSERT INTO tasks (task, note, completed, dueDate) VALUES (?,?,?, ?)";
 
             PreparedStatement stmt  = conn.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, task.getTask());
             stmt.setString(2, task.getNote());
+            stmt.setBoolean(3, task.isCompleted());
+            stmt.setString(4, task.getDueDate());
 
             int rows = stmt.executeUpdate();
 

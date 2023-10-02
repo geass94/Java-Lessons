@@ -14,7 +14,7 @@ public class Main {
 //
 //        ;
 
-        Task task = dao.getById(4);
+        Task task = dao.getById(2);
 
         System.out.println("Inserted index is: " + task.toString());
     }

@@ -8,10 +8,18 @@
         <servlet-name>TodoServlet</servlet-name>
         <servlet-class>ge.itestep.Lesson_Five.TodoServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>TodoServlet</servlet-name>
         <url-pattern>/TodoServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>WelcomeServlet</servlet-name>
+        <servlet-class>ge.itestep.Lesson_Seven.WelcomeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>WelcomeServlet</servlet-name>
+        <url-pattern>/WelcomeServlet</url-pattern>
     </servlet-mapping>
 
 </web-app>

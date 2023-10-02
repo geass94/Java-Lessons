@@ -1,7 +1,13 @@
 package ge.itestep.Lesson_Four;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
+@JsonSerialize
 public class Task implements Serializable {
     private int id;
     private String task;
@@ -24,6 +30,12 @@ public class Task implements Serializable {
         this.updatedAt = updatedAt;
     }
 
+    public Task(JSONObject json){
+        this.task = json.getString("task");
+        this.note = json.getString("note");
+        this.completed = json.getBoolean("iscompleted");
+        this.dueDate = json.getString("dueDate");
+    }
     public int getId() {
         return id;
     }
@@ -80,6 +92,12 @@ public class Task implements Serializable {
         this.updatedAt = updatedAt;
     }
 
+    public String toJson() throws JsonProcessingException {
+        ObjectMapper OM = new ObjectMapper();
+        String json = OM.writeValueAsString(this);
+        return json;
+    }
+
     @Override
     public String toString() {
         return "Task{" +
@@ -92,4 +110,5 @@ public class Task implements Serializable {
                 ", updatedAt='" + updatedAt + '\'' +
                 '}';
     }
+
 }

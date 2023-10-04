@@ -8,9 +8,11 @@
 </head>
 <body>
 
-<p>
-    ${task.task}
-</p>
+<ul>
+    <c:forEach var="task" items="${tasks}">
+        <li><c:out value="${task.task}" /></li>
+    </c:forEach>
+</ul>
 
 </body>
 </html>

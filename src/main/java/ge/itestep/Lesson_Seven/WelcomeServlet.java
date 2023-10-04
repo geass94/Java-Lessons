@@ -21,10 +21,18 @@ public class WelcomeServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html");
         TaskDAO dao = new TaskDAO();
-        Task task = dao.getById(1);
+
+        ArrayList<Task> tasks = new ArrayList<>();
+        tasks.add(dao.getById(1));
+        tasks.add(dao.getById(2));
+        tasks.add(dao.getById(3));
+        tasks.add(dao.getById(4));
+
+
+
 
         String html = "index.jsp";
-        req.setAttribute("task", task);
+        req.setAttribute("tasks", tasks);
         RequestDispatcher requestDispatcher = req.getRequestDispatcher(html);
         requestDispatcher.forward(req, resp);
     }

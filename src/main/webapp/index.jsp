@@ -16,5 +16,14 @@
         <li><c:out value="${task.task}" /></li>
     </c:forEach>
 </ul>
+<form action="/Servlet/welcome" method="post">
+
+    <input type="text" name="task" placeholder="task">
+    <textarea name="note"></textarea>
+    <input type="checkbox" value="1" name="iscompleted">
+    <input type="date" name="duedate">
+    <button type="submit">submit</button>
+
+</form>
 </body>
 </html>

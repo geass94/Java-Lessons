@@ -1,4 +1,6 @@
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="ge.itestep.Lesson_Four.Task" %>
+<jsp:useBean id="task" class="ge.itestep.Lesson_Four.Task" scope="request" />
 <html>
 <head>
     <meta charset="UTF-8">

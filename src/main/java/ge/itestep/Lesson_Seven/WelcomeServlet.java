@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet("/welcome")
 public class WelcomeServlet extends HttpServlet {
@@ -22,11 +23,7 @@ public class WelcomeServlet extends HttpServlet {
         resp.setContentType("text/html");
         TaskDAO dao = new TaskDAO();
 
-        ArrayList<Task> tasks = new ArrayList<>();
-        tasks.add(dao.getById(1));
-        tasks.add(dao.getById(2));
-        tasks.add(dao.getById(3));
-        tasks.add(dao.getById(4));
+        List<Task> tasks = dao.getAll();
 
 
 

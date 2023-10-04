@@ -1,3 +1,4 @@
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -8,9 +9,10 @@
 </head>
 <body>
 
-<p>
-    ${task.task}
-</p>
-
+<ul>
+    <c:forEach var="task" items="${tasks}">
+        <li><c:out value="${task.task}" /></li>
+    </c:forEach>
+</ul>
 </body>
 </html>

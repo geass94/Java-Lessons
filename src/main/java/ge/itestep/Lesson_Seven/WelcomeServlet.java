@@ -36,4 +36,24 @@ public class WelcomeServlet extends HttpServlet {
         RequestDispatcher requestDispatcher = req.getRequestDispatcher(html);
         requestDispatcher.forward(req, resp);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setCharacterEncoding("UTF-8");
+        req.setCharacterEncoding("UTF-8");
+        Task task = new Task();
+        task.setTask(req.getParameter("task"));
+        task.setNote(req.getParameter("note"));
+        String checkBoxValue = req.getParameter("iscompleted");
+        boolean checker = checkBoxValue != null && checkBoxValue.equals("1");
+        task.setCompleted(checker);
+        task.setDueDate(req.getParameter("duedate"));
+        TaskDAO dao = new TaskDAO();
+        Integer daoint =  dao.createTask(task);
+        if(daoint != 1){
+
+        }
+
+
+    }
 }

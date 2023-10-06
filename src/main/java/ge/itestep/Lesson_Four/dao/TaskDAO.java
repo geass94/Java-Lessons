@@ -66,7 +66,27 @@ public class TaskDAO {
     }
 
     public List<Task> getAll() {
-        return new ArrayList<>();
+        try (Connection conn = DatabaseConnection.getConnection())  {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM tasks");
+           ResultSet results = stmt.executeQuery();
+           List<Task> tasks = new ArrayList<>();
+           while(results.next()) {
+               tasks.add(new Task(
+                       results.getInt("id"),
+                       results.getString("task"),
+                       results.getString("note"),
+                       results.getBoolean("completed"),
+                       results.getString("dueDate"),
+                       results.getString("createdAt"),
+                       results.getString("updatedAt")
+               ));
+           }
+           return tasks;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public Task update(Task task, int id) {

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet("/welcome")
 public class WelcomeServlet extends HttpServlet {
@@ -22,11 +23,7 @@ public class WelcomeServlet extends HttpServlet {
         resp.setContentType("text/html");
         TaskDAO dao = new TaskDAO();
 
-        ArrayList<Task> tasks = new ArrayList<>();
-        tasks.add(dao.getById(1));
-        tasks.add(dao.getById(2));
-        tasks.add(dao.getById(3));
-        tasks.add(dao.getById(4));
+        List<Task> tasks = dao.getAll();
 
 
 
@@ -35,5 +32,25 @@ public class WelcomeServlet extends HttpServlet {
         req.setAttribute("tasks", tasks);
         RequestDispatcher requestDispatcher = req.getRequestDispatcher(html);
         requestDispatcher.forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setCharacterEncoding("UTF-8");
+        req.setCharacterEncoding("UTF-8");
+        Task task = new Task();
+        task.setTask(req.getParameter("task"));
+        task.setNote(req.getParameter("note"));
+        String checkBoxValue = req.getParameter("iscompleted");
+        boolean checker = checkBoxValue != null && checkBoxValue.equals("1");
+        task.setCompleted(checker);
+        task.setDueDate(req.getParameter("duedate"));
+        TaskDAO dao = new TaskDAO();
+        Integer daoint =  dao.createTask(task);
+        if(daoint != 1){
+
+        }
+
+
     }
 }

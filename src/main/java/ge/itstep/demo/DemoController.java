@@ -5,21 +5,26 @@ import ge.itstep.demo.model.Task;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/tasks")
 public class DemoController {
 
+    private List<Task> tasks = new ArrayList<>();
+
     @GetMapping("/")
-    public String index()
+    public List<TaskDTO> index()
     {
-        return "this is working";
+        return this.tasks.stream().map(c -> new TaskDTO(c.getId(), c.getTask(), c.getNote(), c.getDueDate(), c.isCompleted())).collect(Collectors.toList());
     }
 
     @PostMapping("/")
     public Task create(@RequestBody TaskDTO taskDTO)
     {
         Task task = new Task(taskDTO.id(), taskDTO.task(), taskDTO.note(), taskDTO.dueDate(), taskDTO.completed());
+        this.tasks.add(task);
         return task;
     }
 

@@ -2,31 +2,38 @@ package ge.itstep.demo;
 
 import ge.itstep.demo.dto.TaskDTO;
 import ge.itstep.demo.model.Task;
+import ge.itstep.demo.repository.TaskRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/tasks")
 public class DemoController {
-
     private List<Task> tasks = new ArrayList<>();
 
+    @Autowired
+    private TaskRepository taskRepository;
+
     @GetMapping("/")
-    public List<TaskDTO> index()
+    public ResponseEntity<List<TaskDTO>> index()
     {
-        return this.tasks.stream().map(c -> new TaskDTO(c.getId(), c.getTask(), c.getNote(), c.getDueDate(), c.isCompleted())).collect(Collectors.toList());
+        List<Task> tasks = taskRepository.findAll();
+        return ResponseEntity.of(Optional.of(tasks.stream().map(c -> new TaskDTO(c.getId(), c.getTask(), c.getNote(), c.getDueDate(), c.isCompleted())).collect(Collectors.toList())));
     }
 
     @PostMapping("/")
     public Task create(@RequestBody TaskDTO taskDTO)
     {
         Random rand = new Random();
-        Task task = new Task(rand.nextInt(0,1000), taskDTO.task(), taskDTO.note(), taskDTO.dueDate(), taskDTO.completed());
-        this.tasks.add(task);
+        Task task = new Task(taskDTO.task(), taskDTO.note(), taskDTO.dueDate(), taskDTO.completed());
+        taskRepository.save(task);
         return task;
     }
 
@@ -53,8 +60,6 @@ public class DemoController {
         }
         return false;
     }
-
-
     static Task queryTaskById(int id, List<Task> tasks){
         for (Task task: tasks) {
             if (task.getId() == id){

@@ -40,8 +40,14 @@ public class DemoController {
     }
 
     @PutMapping("/{id}")
-    public String update(@PathVariable int id)
+    public String update(@PathVariable int id, @RequestBody TaskDTO dto)
     {
+        Task task = taskRepository.getById(Long.valueOf(id));
+        task.setTask(dto.task());
+        task.setNote(dto.note());
+        task.setCompleted(dto.completed());
+        task.setDueDate(dto.dueDate());
+        taskRepository.save(task);
         return "Updated record at ID: " + id;
     }
 

@@ -2,10 +2,12 @@ package ge.itstep.demo;
 
 import ge.itstep.demo.dto.TaskDTO;
 import ge.itstep.demo.model.Task;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -15,9 +17,9 @@ public class DemoController {
     private List<Task> tasks = new ArrayList<>();
 
     @GetMapping("/")
-    public List<TaskDTO> index()
+    public ResponseEntity<List<TaskDTO>> index()
     {
-        return this.tasks.stream().map(c -> new TaskDTO(c.getId(), c.getTask(), c.getNote(), c.getDueDate(), c.isCompleted())).collect(Collectors.toList());
+        return ResponseEntity.of(Optional.of(this.tasks.stream().map(c -> new TaskDTO(c.getId(), c.getTask(), c.getNote(), c.getDueDate(), c.isCompleted())).collect(Collectors.toList())));
     }
 
     @PostMapping("/")

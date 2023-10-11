@@ -24,8 +24,8 @@ public class DemoController {
     @PostMapping("/")
     public Task create(@RequestBody TaskDTO taskDTO)
     {
-        Task task = new Task(Long.valueOf(taskDTO.id()), taskDTO.task(), taskDTO.note(), taskDTO.dueDate(), taskDTO.completed());
-        this.tasks.add(task);
+//        Task task = new Task(Long.valueOf(taskDTO.id()), taskDTO.task(), taskDTO.note(), taskDTO.dueDate(), taskDTO.completed());
+        Task task = this.taskRepository.save(new Task(Long.valueOf(taskDTO.id()), taskDTO.task(), taskDTO.note(), taskDTO.dueDate(), taskDTO.completed()));
         return task;
     }
 

@@ -2,6 +2,8 @@ package ge.itstep.demo;
 
 import ge.itstep.demo.dto.TaskDTO;
 import ge.itstep.demo.model.Task;
+import ge.itstep.demo.repository.TaskRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,20 +16,27 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/tasks")
 public class DemoController {
 
-    private List<Task> tasks = new ArrayList<>();
+    @Autowired
+    private TaskRepository taskRepository;
 
-    @GetMapping("/")
-    public ResponseEntity<List<TaskDTO>> index()
-    {
-        return ResponseEntity.of(Optional.of(this.tasks.stream().map(c -> new TaskDTO(c.getId(), c.getTask(), c.getNote(), c.getDueDate(), c.isCompleted())).collect(Collectors.toList())));
-    }
+    private List<Task> tasks = new ArrayList<>();
 
     @PostMapping("/")
     public Task create(@RequestBody TaskDTO taskDTO)
     {
-        Task task = new Task(taskDTO.id(), taskDTO.task(), taskDTO.note(), taskDTO.dueDate(), taskDTO.completed());
+        Task task = new Task(Long.valueOf(taskDTO.id()), taskDTO.task(), taskDTO.note(), taskDTO.dueDate(), taskDTO.completed());
         this.tasks.add(task);
         return task;
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<TaskDTO>> index()
+    {
+        List<Task> tasks = this.taskRepository.findAll();
+
+        return ResponseEntity.of(Optional.of(tasks.stream().map(c -> new TaskDTO(c.getId().intValue(), c.getTask(), c.getNote(), c.getDueDate(), c.isCompleted())).collect(Collectors.toList())));
+
+//        return ResponseEntity.of(Optional.of(this.tasks.stream().map(c -> new TaskDTO(c.getId().intValue(), c.getTask(), c.getNote(), c.getDueDate(), c.isCompleted())).collect(Collectors.toList())));
     }
 
     @PutMapping("/{id}")

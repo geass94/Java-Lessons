@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 
@@ -27,7 +29,7 @@ public class Task {
     private String note;
     @Getter
     @Setter
-    @Column(name = "dueDate")
+    @Column(name = "due_date")
     private String dueDate;
     @Getter
     @Setter
@@ -35,12 +37,18 @@ public class Task {
     private boolean completed;
     @Getter
     @Setter
-    @Column(name = "createdAt")
+    @Column(name = "created_at")
+    @CreationTimestamp
     private Date createdAt;
     @Getter
     @Setter
-    @Column(name = "updatedAt")
+    @Column(name = "updated_at")
+    @UpdateTimestamp
     private Date updatedAt;
+    @Getter
+    @Setter
+    @Column(name = "first_name")
+    private String firstName;
 
     public Task(Long id, String task, String note, String dueDate, boolean completed) {
         this.id = id;

@@ -51,5 +51,13 @@ public class DemoController {
         return "Updated record at ID: " + id;
     }
 
+    @DeleteMapping("/{id}")
+    public boolean delete(@PathVariable int id)
+    {
+        Task task = taskRepository.getById(Long.valueOf(id));
+        taskRepository.delete(task);
+        return true;
+    }
+
 
 }

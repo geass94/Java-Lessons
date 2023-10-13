@@ -12,7 +12,8 @@ import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "tasks")
+@Entity
+@Table(name = "tasks")
 public class Task {
     @Id
     @Getter

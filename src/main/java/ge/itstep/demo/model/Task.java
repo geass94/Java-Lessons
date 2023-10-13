@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -45,10 +46,6 @@ public class Task {
     @Column(name = "updated_at")
     @UpdateTimestamp
     private Date updatedAt;
-    @Getter
-    @Setter
-    @Column(name = "first_name")
-    private String firstName;
 
     public Task(Long id, String task, String note, String dueDate, boolean completed) {
         this.id = id;

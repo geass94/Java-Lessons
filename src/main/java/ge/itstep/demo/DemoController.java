@@ -25,16 +25,16 @@ public class DemoController {
     public Task create(@RequestBody TaskDTO taskDTO)
     {
 //        Task task = new Task(Long.valueOf(taskDTO.id()), taskDTO.task(), taskDTO.note(), taskDTO.dueDate(), taskDTO.completed());
-        Task task = this.taskRepository.save(new Task(Long.valueOf(taskDTO.id()), taskDTO.task(), taskDTO.note(), taskDTO.dueDate(), taskDTO.completed()));
+        Task task = this.taskRepository.save(new Task(taskDTO.id(), taskDTO.task(), taskDTO.note(), taskDTO.dueDate(), taskDTO.completed()));
         return task;
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<TaskDTO>> index()
+    public ResponseEntity<List<TaskDTO>> getAll()
     {
         List<Task> tasks = this.taskRepository.findAll();
 
-        return ResponseEntity.of(Optional.of(tasks.stream().map(c -> new TaskDTO(c.getId().intValue(), c.getTask(), c.getNote(), c.getDueDate(), c.isCompleted())).collect(Collectors.toList())));
+        return ResponseEntity.of(Optional.of(tasks.stream().map(c -> new TaskDTO(c.getId(), c.getTask(), c.getNote(), c.getDueDate(), c.isCompleted())).collect(Collectors.toList())));
 
 //        return ResponseEntity.of(Optional.of(this.tasks.stream().map(c -> new TaskDTO(c.getId().intValue(), c.getTask(), c.getNote(), c.getDueDate(), c.isCompleted())).collect(Collectors.toList())));
     }

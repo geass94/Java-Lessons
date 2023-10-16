@@ -1,6 +1,8 @@
 package ge.itstep.demo.controllers;
 
 import ge.itstep.demo.dto.UserDTO;
+import ge.itstep.demo.service.UserService;
+import ge.itstep.demo.service.UserServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class AuthController {
+
+    private final UserService userService;
+
+    public AuthController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/registration")
     public String registration(Model model)
@@ -24,15 +32,16 @@ public class AuthController {
             @Valid
             @ModelAttribute("user") UserDTO dto,
             BindingResult result,
-            Model model
-    )
+            Model model)
     {
         if (result.hasErrors()) {
             model.addAttribute("user", dto);
             return "/registration";
         }
 
-        return "registration";
+        userService.saveUser(dto);
+
+        return "redirect:/registration?success";
     }
 
 

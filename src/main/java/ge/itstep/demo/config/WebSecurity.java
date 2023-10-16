@@ -17,7 +17,7 @@ public class WebSecurity {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         (requests) -> requests
-                                .requestMatchers("/registraion/**").permitAll()
+                                .requestMatchers("/registration/**").permitAll()
                                 .requestMatchers("/login/**").permitAll()
                                 .requestMatchers("/user").hasRole("USER")
                                 .anyRequest().authenticated()

@@ -33,6 +33,7 @@ public class UserServiceImpl implements UserService {
             role = roleRepository.save(new Role("ROLE_USER"));
         }
         String hashedPassword = passwordEncoder.encode(dto.getPassword());
+
         User user = new User(dto.getName(), dto.getEmail(), hashedPassword);
         user.setRoles(Arrays.asList(role));
         userRepository.save(user);

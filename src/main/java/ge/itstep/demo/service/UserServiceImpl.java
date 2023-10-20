@@ -1,5 +1,6 @@
 package ge.itstep.demo.service;
 
+import ge.itstep.demo.dto.UpdatePasswordRequest;
 import ge.itstep.demo.dto.UserDTO;
 import ge.itstep.demo.model.Role;
 import ge.itstep.demo.model.User;
@@ -42,5 +43,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
+    }
+
+    @Override
+    public User updatePassword(UpdatePasswordRequest request, String email) {
+        User user = userRepository.findUserByEmail(email);
+        user.setPassword(passwordEncoder.encode(request.password()));
+        user = userRepository.save(user);
+        return user;
     }
 }

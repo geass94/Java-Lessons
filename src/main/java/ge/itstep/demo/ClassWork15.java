@@ -15,9 +15,21 @@ public class ClassWork15 {
 
     }
 
-    class Node {
-        int value;
-        Node left;
-        Node right;
+
+}
+
+class Node {
+    int value;
+    Node left;
+    Node right;
+
+    public Node (int v)
+    {
+
+    }
+
+    public Node find(int v)
+    {
+        return this;
     }
 }

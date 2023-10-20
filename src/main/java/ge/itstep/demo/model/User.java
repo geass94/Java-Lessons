@@ -14,7 +14,7 @@ import java.util.List;
 @Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements Serializable {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
@@ -44,6 +44,11 @@ public class User implements Serializable {
     @Getter
     @Setter
     private List<Role> roles = new ArrayList<>();
+
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Game> games;
 
     public User(String name, String email, String password) {
         this.name = name;

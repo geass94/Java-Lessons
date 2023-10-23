@@ -49,6 +49,23 @@ public class CalculatePoints {
             }
         }
 
+        System.out.println(gridToString(occupiedCells));
+
+    }
+
+
+    public static String gridToString(boolean[][] grid) {
+        StringBuilder sb = new StringBuilder();
+
+        for (int y = 0; y < grid.length; y++) {
+            for (int x = 0; x < grid.length; x++) {
+                sb.append(grid[x][y] == true ? "X" : "_");
+                sb.append(" ");
+            }
+            sb.append("\n");
+        }
+
+        return sb.toString();
     }
 
 }

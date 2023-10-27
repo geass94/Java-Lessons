@@ -1,5 +1,7 @@
 package ge.itstep.demo.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import ge.itstep.demo.model.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
@@ -24,7 +26,15 @@ public class UserDTO {
     @Setter
     private String email;
     @NotEmpty(message = "Oe")
+    @JsonIgnore
     @Getter
     @Setter
     private String password;
+
+    public UserDTO(User user)
+    {
+        this.id = user.getId();
+        this.name = user.getName();
+        this.email = user.getEmail();
+    }
 }

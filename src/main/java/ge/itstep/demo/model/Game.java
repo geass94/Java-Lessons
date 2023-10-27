@@ -12,31 +12,25 @@ public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "grid_size")
     private Integer gridSize = 10;
-    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Ship> ships;
 
-    @Column(name = "hits")
-    private Integer hits = 50;
+    @OneToMany( mappedBy = "game", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Ship> ships;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(name = "hits")
+    private Integer hits = 50;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 
     public Game() {
-    }
 
-    public Game(Long id, Integer gridSize, List<Ship> ships, Integer hits, User user, LocalDateTime createdAt) {
-        this.id = id;
-        this.gridSize = gridSize;
-        this.ships = ships;
-        this.hits = hits;
-        this.user = user;
-        this.createdAt = createdAt;
     }
 
     public Long getId() {
@@ -63,14 +57,6 @@ public class Game {
         this.ships = ships;
     }
 
-    public Integer getHits() {
-        return hits;
-    }
-
-    public void setHits(Integer hits) {
-        this.hits = hits;
-    }
-
     public User getUser() {
         return user;
     }
@@ -79,11 +65,28 @@ public class Game {
         this.user = user;
     }
 
+    public Integer getHits() {
+        return hits;
+    }
+
+    public void setHits(Integer hits) {
+        this.hits = hits;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public boolean hasWon()
+    {
+        int hits = this.getShips().stream().mapToInt(Ship::getSize).sum();
+        for (Ship ship : this.getShips()) {
+            hits -= ship.getHits();
+        }
+        return hits == 0;
     }
 }

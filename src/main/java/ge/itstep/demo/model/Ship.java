@@ -1,5 +1,6 @@
 package ge.itstep.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -8,30 +9,44 @@ public class Ship {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "start_x")
-    private int startX;
-    @Column(name = "start_y")
-    private int startY;
-    @Column(name = "end_x")
-    private int endX;
-    @Column(name = "end_y")
-    private int endY;
-    @Column(name = "hits")
-    private int hits = 0;
-    @Column(name = "type")
+
+    @Enumerated(EnumType.STRING)
     private ShipType type;
 
-    public Ship() {
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "game_id")
+    private Game game;
+
+    @Column(name = "start_x")
+    private int startX;
+
+    @Column(name = "start_y")
+    private int startY;
+
+    @Column(name = "end_x")
+    private int endX;
+
+    @Column(name = "end_y")
+    private int endY;
+
+    @Column(name = "hits")
+    private int hits = 0;
+
+    public void hit() {
+        hits++;
     }
 
-    public Ship(Long id, int startX, int startY, int endX, int endY, int hits, ShipType type) {
-        this.id = id;
-        this.startX = startX;
-        this.startY = startY;
-        this.endX = endX;
-        this.endY = endY;
-        this.hits = hits;
-        this.type = type;
+    public boolean isSunk() {
+        return hits == getLength();
+    }
+
+    private int getLength() {
+        return type.getSize();
+    }
+
+    public Ship() {
+
     }
 
     public Long getId() {
@@ -40,6 +55,22 @@ public class Ship {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public ShipType getType() {
+        return type;
+    }
+
+    public void setType(ShipType type) {
+        this.type = type;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     public int getStartX() {
@@ -82,11 +113,18 @@ public class Ship {
         this.hits = hits;
     }
 
-    public ShipType getType() {
-        return type;
+    public Integer getSize()
+    {
+        return this.getType().getSize();
     }
 
-    public void setType(ShipType type) {
-        this.type = type;
+    @Override
+    public String toString() {
+        return "Ship{" +
+                "startX=" + startX +
+                ", endX=" + endX +
+                ", startY=" + startY +
+                ", endY=" + endY +
+                '}';
     }
 }

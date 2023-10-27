@@ -9,16 +9,16 @@ import java.util.Random;
 public class CalculatePoints {
 
     static boolean occupiedCells[][] = new boolean[10][10];
+
     public static void main(String[] args) {
 
         final int gridSize = 10;
 
         List<Ship> ships = new ArrayList<>();
 
-        for (int s = 0; s < 2; s++)
-        {
-            ships.add(generateShips(gridSize, ShipType.FOUR_SLOT));
-            ships.add(generateShips(gridSize, ShipType.TWO_SLOT));
+        for (int s = 0; s < 2; s++) {
+            ships.add(generateShip(gridSize, ShipType.FOUR_SLOT));
+            ships.add(generateShip(gridSize, ShipType.TWO_SLOT));
         }
 
 
@@ -28,49 +28,48 @@ public class CalculatePoints {
 
     }
 
-    public static Ship generateShips(int gridSize, ShipType type)
-    {
+    public static Ship generateShip(int gridSize, ShipType type) {
         Random random = new Random();
         Ship ship = new Ship();
         int lowerLimit = 0, upperLimit = 9, x, y;
         boolean isHorizontal = random.nextInt() % 2 == 0;
         if (isHorizontal) {
-            x = random.nextInt(upperLimit - lowerLimit + 1) + lowerLimit;
-            while(x + type.getSize() > gridSize) {
+            while (ship.getX1() + ship.getX2() + ship.getY1() + ship.getY2() == 0) {
                 x = random.nextInt(upperLimit - lowerLimit + 1) + lowerLimit;
-            }
-            y = random.nextInt(upperLimit - lowerLimit + 1) + lowerLimit;
-
-            while (notInOccupiedArea(x, y, x + type.getSize(), y)) {
-                markHolesAsOccupied(x, y, x + type.getSize(), y);
-                ship.setX1(x);
-                ship.setY1(y);
-                ship.setX2(x + type.getSize());
-                ship.setY2(y);
-            }
-
-
-        } else {
-            x = random.nextInt(upperLimit - lowerLimit + 1) + lowerLimit;
-            y = random.nextInt(upperLimit - lowerLimit + 1) + lowerLimit;
-            while (y + type.getSize() > gridSize) {
+                while (x + type.getSize() > gridSize) {
+                    x = random.nextInt(upperLimit - lowerLimit + 1) + lowerLimit;
+                }
                 y = random.nextInt(upperLimit - lowerLimit + 1) + lowerLimit;
-            }
-            while (notInOccupiedArea(x, y, x, y + type.getSize())) {
-                markHolesAsOccupied(x, y, x, y + type.getSize());
-                ship.setX1(x);
-                ship.setY1(y);
-                ship.setX2(x);
-                ship.setY2(y + type.getSize());
-            }
 
+                while (notInOccupiedArea(x, y, x + type.getSize(), y)) {
+                    markHolesAsOccupied(x, y, x + type.getSize(), y);
+                    ship.setX1(x);
+                    ship.setY1(y);
+                    ship.setX2(x + type.getSize());
+                    ship.setY2(y);
+                }
+            }
+        } else {
+            while (ship.getX1() + ship.getX2() + ship.getY1() + ship.getY2() == 0) {
+                x = random.nextInt(upperLimit - lowerLimit + 1) + lowerLimit;
+                y = random.nextInt(upperLimit - lowerLimit + 1) + lowerLimit;
+                while (y + type.getSize() > gridSize) {
+                    y = random.nextInt(upperLimit - lowerLimit + 1) + lowerLimit;
+                }
+                while (notInOccupiedArea(x, y, x, y + type.getSize())) {
+                    markHolesAsOccupied(x, y, x, y + type.getSize());
+                    ship.setX1(x);
+                    ship.setY1(y);
+                    ship.setX2(x);
+                    ship.setY2(y + type.getSize());
+                }
+            }
         }
 
         return ship;
     }
 
-    public static void markHolesAsOccupied(int x1, int y1, int x2, int y2)
-    {
+    public static void markHolesAsOccupied(int x1, int y1, int x2, int y2) {
         boolean isHorizontal = y1 == y2;
         if (isHorizontal) {
             for (int x = x1; x < x2; x++) {
@@ -84,8 +83,7 @@ public class CalculatePoints {
 
     }
 
-    public static boolean notInOccupiedArea(int x1, int y1, int x2, int y2)
-    {
+    public static boolean notInOccupiedArea(int x1, int y1, int x2, int y2) {
         boolean isHorizontal = y1 == y2;
         if (isHorizontal) {
             for (int x = x1; x < x2; x++) {
@@ -99,8 +97,7 @@ public class CalculatePoints {
         return true;
     }
 
-    public static void findOccupies(int x, int y, int gridsize)
-    {
+    public static void findOccupies(int x, int y, int gridsize) {
         if (x - 1 > -1) occupiedCells[x - 1][y] = true;
         if (x + 1 < gridsize) occupiedCells[x + 1][y] = true;
         if (y + 1 < gridsize) occupiedCells[x][y + 1] = true;
@@ -145,8 +142,7 @@ class Ship {
         this.y2 = y2;
     }
 
-    public boolean isHorizontal()
-    {
+    public boolean isHorizontal() {
         return y1 == y2;
     }
 

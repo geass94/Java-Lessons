@@ -1,4 +1,4 @@
 package ge.itstep.demo.dto;
 
-public class ShipDTO {
+public record ShipDTO (int startX, int endX, int startY, int endY) {
 }

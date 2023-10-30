@@ -1,4 +1,6 @@
 package ge.itstep.demo.dto;
 
-public record ShipDTO (int startX, int endX, int startY, int endY) {
+import ge.itstep.demo.model.Cords;
+
+public record ShipDTO(Long id, Cords cords, boolean is_sunk) {
 }

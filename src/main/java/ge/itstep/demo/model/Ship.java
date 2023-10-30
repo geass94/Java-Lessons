@@ -1,130 +1,46 @@
 package ge.itstep.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-@Entity
-@Table(name = "ships")
+import java.util.Date;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity(name = "ships")
 public class Ship {
     @Id
+    @Getter
+    @Setter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Getter
+    @Setter
+    @OneToOne(cascade = CascadeType.ALL)
+    private Cords cords;
+    @Getter
+    @Setter
+    @Column(name = "is_sunk")
+    private boolean isSunk;
+    @Getter
+    @Setter
+    @Column(name = "created_at")
+    @CreationTimestamp
+    private Date created_at;
+    @Getter
+    @Setter
+    @Column(name = "updated_at")
+    @UpdateTimestamp
+    private Date updated_at;
 
-    @Enumerated(EnumType.STRING)
-    private ShipType type;
-
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "game_id")
-    private Game game;
-
-    @Column(name = "start_x")
-    private int startX;
-
-    @Column(name = "start_y")
-    private int startY;
-
-    @Column(name = "end_x")
-    private int endX;
-
-    @Column(name = "end_y")
-    private int endY;
-
-    @Column(name = "hits")
-    private int hits = 0;
-
-    public void hit() {
-        hits++;
-    }
-
-    public boolean isSunk() {
-        return hits == getLength();
-    }
-
-    private int getLength() {
-        return type.getSize();
-    }
-
-    public Ship() {
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
+    public Ship(Long id, Cords cords, boolean is_sunk) {
         this.id = id;
-    }
-
-    public ShipType getType() {
-        return type;
-    }
-
-    public void setType(ShipType type) {
-        this.type = type;
-    }
-
-    public Game getGame() {
-        return game;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
-    public int getStartX() {
-        return startX;
-    }
-
-    public void setStartX(int startX) {
-        this.startX = startX;
-    }
-
-    public int getStartY() {
-        return startY;
-    }
-
-    public void setStartY(int startY) {
-        this.startY = startY;
-    }
-
-    public int getEndX() {
-        return endX;
-    }
-
-    public void setEndX(int endX) {
-        this.endX = endX;
-    }
-
-    public int getEndY() {
-        return endY;
-    }
-
-    public void setEndY(int endY) {
-        this.endY = endY;
-    }
-
-    public int getHits() {
-        return hits;
-    }
-
-    public void setHits(int hits) {
-        this.hits = hits;
-    }
-
-    public Integer getSize()
-    {
-        return this.getType().getSize();
-    }
-
-    @Override
-    public String toString() {
-        return "Ship{" +
-                "startX=" + startX +
-                ", endX=" + endX +
-                ", startY=" + startY +
-                ", endY=" + endY +
-                '}';
+        this.cords = cords;
+        this.isSunk = is_sunk;
     }
 }

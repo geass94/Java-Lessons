@@ -1,4 +1,4 @@
-package ge;
+package ge.itstep.demo;
 
 public class ClassWork19 {
 

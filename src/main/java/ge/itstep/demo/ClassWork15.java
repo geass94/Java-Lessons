@@ -3,39 +3,39 @@ package ge.itstep.demo;
 public class ClassWork15 {
     public static void main(String[] args) {
 
-        Node root = new Node(10);
+        NodeNode root = new NodeNode(10);
 
-        root.left = new Node(5);
-        root.right = new Node(15);
+        root.left = new NodeNode(5);
+        root.right = new NodeNode(15);
 
 
-        root.left.left = new Node(3);
-        root.left.right = new Node(7);
+        root.left.left = new NodeNode(3);
+        root.left.right = new NodeNode(7);
 
-        root.right.left = new Node(12);
-        root.right.right = new Node(28);
+        root.right.left = new NodeNode(12);
+        root.right.right = new NodeNode(28);
 
-        Node result = root.find(15);
+        NodeNode result = root.find(15);
         System.out.println(result.toString());
     }
 
 
 }
 
-class Node {
+class NodeNode {
     int value;
-    Node left;
-    Node right;
+    NodeNode left;
+    NodeNode right;
 
-    public Node (int v)
+    public NodeNode (int v)
     {
         this.value = v;
         this.left = null;
         this.right = null;
     }
 
-    public Node find(int v) {
-        Node current = this;
+    public NodeNode find(int v) {
+        NodeNode current = this;
 
         while (current != null) {
             if (v == current.value) {

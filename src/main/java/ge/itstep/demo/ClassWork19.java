@@ -18,7 +18,7 @@ class LinkedList {
 
     public void push(int y) {
         Node newNode = new Node(y);
-        newNode.next = newNode;
+        newNode.next = node;
         node = newNode;
     }
 

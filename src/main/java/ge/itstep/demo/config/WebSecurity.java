@@ -25,6 +25,7 @@ public class WebSecurity {
                 .authorizeHttpRequests(
                         (requests) -> requests
                                 .requestMatchers("/registration/**").permitAll()
+                                .requestMatchers("/event").permitAll()
                                 .requestMatchers("/login/**").permitAll()
                                 .requestMatchers("/user").hasRole("USER")
                                 .anyRequest().authenticated()

@@ -1,9 +1,17 @@
 package ge.itstep.demo.controllers;
 
 import ge.itstep.demo.dto.UserDTO;
+import ge.itstep.demo.events.CustomEventPublisher;
 import ge.itstep.demo.service.UserService;
 import ge.itstep.demo.service.UserServiceImpl;
 import jakarta.validation.Valid;
+
+import java.util.Optional;
+
+import javax.print.attribute.standard.Media;
+
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,8 +24,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AuthController {
 
     private final UserService userService;
+    private final CustomEventPublisher publisher;
 
-    public AuthController(UserService userService) {
+    public AuthController(UserService userService, CustomEventPublisher publisher) {
+        this.publisher = publisher;
         this.userService = userService;
     }
 
@@ -50,6 +60,13 @@ public class AuthController {
     public String loginForm()
     {
         return "login";
+    }
+
+    @PostMapping(value = "/event", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> triggerEvent()
+    {
+        this.publisher.publishCustomEvent();
+        return ResponseEntity.ok("I did this"); 
     }
 
 }

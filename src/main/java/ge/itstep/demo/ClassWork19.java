@@ -9,6 +9,17 @@ public class ClassWork19 {
         list.push(2);
         list.push(3);
         list.print();
+
+        try {
+//  შეეცდება
+        } catch (Exception e) {
+//  გაასხამს
+        } finally {
+//  მაგრამ ეს მაინც შესრულდება
+        }
+
+        
+// ეს კიდე არ შესრულდება
     }
 
 }

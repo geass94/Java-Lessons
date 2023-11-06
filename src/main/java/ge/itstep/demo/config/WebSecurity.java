@@ -24,19 +24,8 @@ public class WebSecurity {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         (requests) -> requests
-                                .requestMatchers("/registration/**").permitAll()
-                                .requestMatchers("/event").permitAll()
-                                .requestMatchers("/login/**").permitAll()
-                                .requestMatchers("/user").hasRole("USER")
-                                .anyRequest().authenticated()
-                )
-                .formLogin((form) -> form
-                        .loginPage("/login")
-                        .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/user")
-                        .permitAll()
-                )
-                .logout((logout) -> logout.permitAll());
+                                .requestMatchers("/**").permitAll()
+                );
         return http.build();
     }
 }

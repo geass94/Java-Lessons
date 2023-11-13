@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ge.itstep.demo.dto.StudentDTO;
 import ge.itstep.demo.models.Student;
 import ge.itstep.demo.services.StudentService;
+import ge.itstep.demo.services.TeamService;
 import jakarta.validation.Valid;
 
 @Controller
@@ -23,6 +24,8 @@ public class StudentController {
 
     @Autowired
     private StudentService service;
+    @Autowired
+    private TeamService teamService;
     
     @PostMapping("")
     public ResponseEntity<Student> create(@RequestBody @Valid StudentDTO dto)
@@ -44,6 +47,13 @@ public class StudentController {
     @GetMapping("/{id}")
     public ResponseEntity<Student> getOne(@PathVariable Long id) {
         return ResponseEntity.ok(this.service.findOne(id));
+    }
+
+
+    @GetMapping("/teams")
+    public ResponseEntity<List> getTeams()
+    {
+        return ResponseEntity.ok(teamService.createTeams());
     }
  
 }
